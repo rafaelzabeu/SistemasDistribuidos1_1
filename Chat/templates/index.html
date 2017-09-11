@@ -5,15 +5,16 @@
      <script src="//{{ip}}/js/jquery-3.2.1.min.js"></script>
      <script src="//{{ip}}/js/socket.io.slim.js"></script>
     <script src="//{{ip}}/js/chat.js"></script>
+	<link rel="stylesheet" type="text/css" href="//{{ip}}/css/style.css" />
     <title>Chat</title>
 </head>
 <body>
-<textarea readonly="true" id="textArea">
+<textarea readonly="true" id="textArea" class="mensagens">
 
 </textarea>
 
 <form id="input" method="post" action="#">
-    <input type="text" id="emit_data" placeholder="Digite aqui!"/>
+    <input type="text" id="emit_data" class ="texto"/>
     <input type="submit" value="Disconnect" style="position: absolute; left:-99999px"/>
 </form>
 

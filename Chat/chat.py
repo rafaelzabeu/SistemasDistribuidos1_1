@@ -31,6 +31,11 @@ def get_socketio():
 @app.route('/js/chat.js')
 def get_chat():
     return app.send_static_file('chat.js')
+	
+# routes to static css file
+@app.route('/css/style.css')
+def get_css():
+    return app.send_static_file('style.css')
 
 
 # responds to the client connect event on the /chat namespace
