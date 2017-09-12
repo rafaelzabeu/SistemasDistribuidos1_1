@@ -33,9 +33,6 @@ $(document).ready(function() {
 	$(disconnectButton).hide();
 	
     socket.on('connect', function() {
-        //sends the naming event to the server. TODO: Implement name input for the user
-        socket.emit('sync_name', {name: 'coisa'});
-        alert('Connected!'); //TODO: Change feedback from alert
     });
 
     socket.on('message', function(msg){
@@ -57,20 +54,21 @@ $(document).ready(function() {
     //TODO: Make disconnect button work
     $('form#disconnect').submit(function(event) {
         socket.emit('disconnect_request');
+        location.reload();
         return false;
     });
-	
-	//Verifies if the user has a name
-	$(sendName).click(function()
-	{
-		if (userNameValue.length > 0)
-		{
-			$(userName).hide();
+
+	$('form#name_form').submit(function(event){
+	    //sends the naming event to the server.
+	    var data = {name: $('#user_name').val()};
+        socket.emit('sync_name', data);
+        $(userName).hide();
 			$(sendName).hide();
 			$(textArea).show();
 			$(submitButton).show();
 			$(emmitDataInput).show();
 			$(disconnectButton).show();
-		}
+        return false;
 	});
+
 });

@@ -9,6 +9,8 @@ socketio = SocketIO(app)
 # ip = '172.16.66.38:5000'
 ip = '127.0.0.1:5000'
 
+users = {}
+
 
 # route of the index page
 @app.route('/')
@@ -31,7 +33,8 @@ def get_socketio():
 @app.route('/js/chat.js')
 def get_chat():
     return app.send_static_file('chat.js')
-	
+
+
 # routes to static css file
 @app.route('/css/style.css')
 def get_css():
@@ -47,19 +50,27 @@ def on_connect():
 @socketio.on('disconnect', namespace='/chat')
 def on_disconnect():
     # avisa os clientes que alguem disconectou
-    emit('message', {'data': 'User' + request.sid + ' disconnected'}, broadcast=True)
+    print('Someone disconnected', file=sys.stderr)
 
 
-# responds to the naming event send by the client after connection. TODO: Actually implement usernames
+@socketio.on('disconnect_request', namespace='/chat')
+def on_disconnect_request():
+    emit('message', {'data': 'User' + users[request.sid] + ' disconnected'}, broadcast=True)
+    del users[request.sid]
+    disconnect()
+
+
+# responds to the naming event send by the client after connection.
 @socketio.on('sync_name', namespace='/chat')
 def on_sync_name(message):
+    users[request.sid] = message['name']
     emit('message', {'data': 'User ' + message['name'] + ' connected!'}, broadcast=True)
 
 
 # responds to the message sent by client event and broadcasts it to all connected clients
 @socketio.on('message', namespace='/chat')
 def on_message_recived(message):
-    emit('message', {'data': request.sid + ':' + message['message']}, broadcast=True)
+    emit('message', {'data': users[request.sid] + ':' + message['message']}, broadcast=True)
 
 
 if __name__ == '__main__':
