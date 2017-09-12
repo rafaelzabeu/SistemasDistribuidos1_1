@@ -3,20 +3,34 @@ $(document).ready(function() {
 
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
 	//gets the name value
-
-	var userNameValue =  $('#user_name').val();
+	var userNameValue = $('#user_name').val();
+	
+	//where the user writes their name
 	var userName = $('#user_name');
+	
+	//button to send message
 	var submitButton = $('#send_button');
+	
+	//button to disconnect
+	var disconnectButton = $('#disconnect_button');
+	
+	//bool to check is the name is empty or not
     var isName = false;
+	
+	//button to send the user name
 	var sendName = $('#send_name');
+	
     //where the messages are displayed
     var textArea = $('#text_area');
+	
     //box where the user writes their messages
     var emmitDataInput = $('#emit_data');
+	
+	//hides chat elements
 	$(textArea).hide();
 	$(submitButton).hide();
 	$(emmitDataInput).hide();
-	//hides the chat elements
+	$(disconnectButton).hide();
 	
     socket.on('connect', function() {
         //sends the naming event to the server. TODO: Implement name input for the user
@@ -47,21 +61,16 @@ $(document).ready(function() {
     });
 	
 	//Verifies if the user has a name
-	
-	$('#send_name').click(function()
+	$(sendName).click(function()
 	{
 		if (userNameValue.length > 0)
 		{
-			isName = true;
+			$(userName).hide();
+			$(sendName).hide();
+			$(textArea).show();
+			$(submitButton).show();
+			$(emmitDataInput).show();
+			$(disconnectButton).show();
 		}
 	});
-	
-	if (isName == true)
-	{
-		$(userName).hide();
-		$(sendName).hide();
-		$(textArea).show();
-		$(submitButton).show();
-		$(emmitDataInput).show();
-	}
 });
