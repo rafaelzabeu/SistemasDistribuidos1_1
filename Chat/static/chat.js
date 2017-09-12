@@ -3,17 +3,20 @@ $(document).ready(function() {
 
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
 	//gets the name value
-	var username =  document.getElementsById('user_name').value;
+
+	var userNameValue =  $('#user_name').val();
+	var userName = $('#user_name');
+	var submitButton = $('#send_button');
     var isName = false;
+	var sendName = $('#send_name');
     //where the messages are displayed
-    var textArea = $('#textArea');
+    var textArea = $('#text_area');
     //box where the user writes their messages
     var emmitDataInput = $('#emit_data');
-	
+	$(textArea).hide();
+	$(submitButton).hide();
+	$(emmitDataInput).hide();
 	//hides the chat elements
-	document.getElementsById('textArea').style.visibility = 'hidden';
-	document.getElementsById('input').style.visibility = 'hidden';
-	document.getElementsById('submit').style.visibility = 'hidden';
 	
     socket.on('connect', function() {
         //sends the naming event to the server. TODO: Implement name input for the user
@@ -44,22 +47,21 @@ $(document).ready(function() {
     });
 	
 	//Verifies if the user has a name
-	if (nome.length > 0)
-    {
-        isNome = true;
-    }
-    else
-    {
-        alert("O campo nome esta vazio!");
-    }
 	
-	//Shows chat elements 
-	if (isNome == true)
+	$('#send_name').click(function()
 	{
-		document.getElementsById('user_name').style.visibility = 'hidden';
-		document.getElementsById('textArea').style.visibility = 'visible';
-		document.getElementsById('input').style.visibility = 'visible';
-		document.getElementsById('submit').style.visibility = 'visible';
+		if (userNameValue.length > 0)
+		{
+			isName = true;
+		}
+	});
+	
+	if (isName == true)
+	{
+		$(userName).hide();
+		$(sendName).hide();
+		$(textArea).show();
+		$(submitButton).show();
+		$(emmitDataInput).show();
 	}
-
 });

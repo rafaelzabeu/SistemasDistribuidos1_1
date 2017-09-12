@@ -9,24 +9,26 @@
     <title>Chat</title>
 </head>
 <body>
-<div class = "divstyle">
+<div>
 	<input type="text" id="user_name" class ="texto"/>
 </div>
-<div class = "divstyle">
-	<textarea readonly="true" id="textArea" class="mensagens">
-
+<div>
+	<button id="send_name" type="button">Enviar</button>
+</div>
+<div>
+	<textarea readonly="true" id="text_area" class="mensagens">
 	</textarea>
 </div>
 <form id="input" method="post" action="#">
-	<div class = "divstyle">
+	<div>
 		<input type="text" id="emit_data" class ="texto"/>
-		<input type="submit" value="Disconnect" style="position: absolute; left:-99999px"/>
+		<input type="submit" value="Disconnect" />
 	</div>
 </form>
 
 <form id="disconnect" method="post" action="#">
-	<div class = "divstyle">
-		<input type="submit" class="submitbutton"/>
+	<div>
+		<input type="submit" id="send_button" class="submitbutton"/>
 	</div>
 </form>
 
